@@ -2,9 +2,11 @@
 import './App.css'
 import Navbar from './component/Header/NavBar'
 import Hero from './component/Hero/Hero'
+import JourneySteps from './component/JourneySteps/JourneySteps'
 import PromoSection from './component/PromoSection/PromoSection'
 import Services from './component/Services/Services'
 import Stats from './component/Stats/Stats'
+import UseCases from './component/UseCases/UseCases'
 
 function App() {
  
@@ -22,6 +24,8 @@ function App() {
         <Stats />
         <Services />
         <PromoSection/>
+        <JourneySteps />
+        <UseCases />
         {/* Upcoming sections: <Stats />, <Services />, etc. */}
       </main>
 

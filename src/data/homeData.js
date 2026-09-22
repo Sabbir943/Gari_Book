@@ -85,3 +85,53 @@ export const promoSectionsData = [
     imagePosition: "right",
   },
 ];
+
+// Add to src/data/homeData.js
+
+export const journeyStepsData = [
+  {
+    step: "01",
+    title: "Choose Your Vehicle",
+    description: "Select from sedan, microbus, SUV, or luxury vehicles based on your passenger capacity and budget.",
+    icon: "Car",
+  },
+  {
+    step: "02",
+    title: "Select Pickup & Time",
+    description: "Specify your pickup point, trip destination, date, and preferred departure time.",
+    icon: "MapPin",
+  },
+  {
+    step: "03",
+    title: "Confirm & Travel",
+    description: "Get instant driver details, track your ride in real-time, and enjoy a safe journey.",
+    icon: "CheckCircle",
+  },
+];
+
+export const useCasesData = [
+  {
+    id: "airport",
+    title: "Airport Rides",
+    subtitle: "Punctual & Stress-Free",
+    description: "Never worry about missing a flight. On-time pickups and terminal drop-offs available 24/7.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
+    tag: "24/7 Available",
+  },
+  {
+    id: "family",
+    title: "Family Outings",
+    subtitle: "Spacious & Comfortable",
+    description: "Rent spacious microbuses or SUVs to travel together comfortably on family vacations.",
+    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
+    tag: "Spacious",
+  },
+  {
+    id: "long-tours",
+    title: "Cross-District Tours",
+    subtitle: "Explore All 64 Districts",
+    description: "Plan long-distance trips with verified local drivers who know the safest highway routes.",
+    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80",
+    tag: "Popular",
+  },
+];

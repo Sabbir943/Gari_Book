@@ -7,32 +7,39 @@ export default function BookingForm() {
   const [dropoff, setDropoff] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [status, setStatus] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Frontend-only interaction state
-    alert(`Searching cars for ${tripType} trip from "${pickup}" to "${dropoff}" on ${date} at ${time}`);
+    // Frontend-only interaction state (no page reload)
+    setStatus(
+      `Searching cars for ${tripType.replace("-", " ")} trip from "${pickup}" to "${dropoff}" on ${date} at ${time}.`
+    );
   };
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Trip Type Tabs */}
-      <div className="flex gap-2 border-b border-gray-100 pb-4 mb-6">
-        {["one-way", "round-trip", "hourly"].map((type) => (
-          <button
-            key={type}
-            type="button"
-            onClick={() => setTripType(type)}
-            className={`px-4 py-2 rounded-lg text-sm font-semibold capitalize transition-colors ${
-              tripType === type
-                ? "bg-emerald-600 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            {type.replace("-", " ")}
-          </button>
-        ))}
-      </div>
+        {/* Trip Type Tabs */}
+        <div className="flex flex-wrap gap-2 border-b border-gray-100 pb-4 mb-6">
+          {["one-way", "round-trip", "hourly"].map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => {
+                setTripType(type);
+                setStatus("");
+              }}
+              aria-pressed={tripType === type}
+              className={`px-4 py-2 rounded-lg text-sm font-semibold capitalize transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                tripType === type
+                  ? "bg-emerald-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {type.replace("-", " ")}
+            </button>
+          ))}
+        </div>
 
       {/* Form Fields */}
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -91,6 +98,15 @@ export default function BookingForm() {
           <ArrowRight className="w-4 h-4" />
         </button>
       </form>
+
+      {/* Non-blocking submit feedback (QA: no alerts, no reload) */}
+      <div role="status" aria-live="polite" className="min-h-6 mt-3">
+        {status && (
+          <p className="text-sm font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 inline-block">
+            {status}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

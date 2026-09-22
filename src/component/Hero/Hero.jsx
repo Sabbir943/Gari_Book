@@ -2,12 +2,14 @@ import { useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ShieldCheck, Star, Award, Smartphone } from "lucide-react";
 import BookingForm from "../BookingForm/BookingForm";
+import { prefersReducedMotion } from "../../utils/motion";
 
 export default function Hero() {
   const heroRef = useRef(null);
 
   // GSAP Entrance & Floating Badge Animations
   useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       // Entrance Timeline
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -44,6 +46,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
+      id="top"
       className="relative min-h-[90vh] bg-gradient-to-br from-emerald-950 via-gray-900 to-slate-950 text-white overflow-hidden pt-12 pb-24 px-4 sm:px-6 lg:px-8"
     >
       {/* Decorative Background Glows */}

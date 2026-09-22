@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MapPin, Route, Users, Star } from "lucide-react";
 import { statsData } from "../../data/homeData";
+import { prefersReducedMotion } from "../../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +14,7 @@ export default function Stats() {
   const numberRefs = useRef([]);
 
   useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       gsap.from(".stat-card", {
         scrollTrigger: {

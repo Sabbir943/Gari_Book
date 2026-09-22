@@ -3,7 +3,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
 import { promoSectionsData } from "../../data/homeData";
-import fallbackImage from "../../assets/hero.png";
+import fallbackImage from "../../assets/hero.svg";
+import { prefersReducedMotion } from "../../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ export default function PromoSection() {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       const blocks = gsap.utils.toArray(".promo-block", sectionRef.current);
 

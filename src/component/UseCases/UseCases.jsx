@@ -3,7 +3,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight, MapPinned, Users } from "lucide-react";
 import { useCasesData } from "../../data/homeData";
-import fallbackImage from "../../assets/hero.png";
+import fallbackImage from "../../assets/hero.svg";
+import { prefersReducedMotion } from "../../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ export default function UseCases() {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {

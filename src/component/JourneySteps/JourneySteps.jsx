@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Car, MapPin, CheckCircle, Compass } from "lucide-react";
 import { journeyStepsData } from "../../data/homeData";
+import { prefersReducedMotion } from "../../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,7 @@ export default function JourneySteps() {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {

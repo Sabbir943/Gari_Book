@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Car, Clock, Plane, Sparkles, ArrowRight } from "lucide-react";
 import { servicesData } from "../../data/homeData";
+import { prefersReducedMotion } from "../../utils/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +18,7 @@ export default function Services() {
   const sectionRef = useRef(null);
 
   useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -76,7 +78,7 @@ export default function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative py-20 sm:py-24 bg-white overflow-hidden"
+      className="relative py-20 sm:py-24 bg-white overflow-hidden scroll-mt-24"
     >
       {/* Background Glows */}
       <div className="absolute top-0 right-0 w-[420px] h-[420px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />

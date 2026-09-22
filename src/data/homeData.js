@@ -135,3 +135,73 @@ export const useCasesData = [
     tag: "Popular",
   },
 ];
+
+// Add to src/data/homeData.js
+
+export const appPromoData = {
+  title: "Get the Garibook App",
+  description: "Book rides, track your driver in real-time, and manage all your trips right from your pocket. Available on iOS and Android.",
+  image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80", // Mobile app mockup
+};
+
+export const driverPromoData = {
+  title: "Be a Smart Driver",
+  description: "Join our network of professional drivers. Enjoy flexible hours, consistent rides, and maximize your earnings with our 0% commission model on select trips.",
+  image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80", // Driver image
+};
+// Add to src/data/homeData.js
+
+export const testimonialsData = [
+  {
+    id: 1,
+    name: "Tanvir Hossain",
+    role: "Corporate Executive",
+    comment: "Garibook makes intercity travel seamless. The driver was punctual, clean vehicle, and zero hidden costs.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+  },
+  {
+    id: 2,
+    name: "Nusrat Jahan",
+    role: "Frequent Traveler",
+    comment: "Booked a microbus for a family trip to Sylhet. Excellent experience and very supportive customer care team.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80",
+  },
+  {
+    id: 3,
+    name: "Rafiqul Islam",
+    role: "Business Owner",
+    comment: "We rely on Garibook's corporate service for all guest transfers. Reliable and professional every single time.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+  },
+];
+
+export const blogsData = [
+  {
+    id: 1,
+    title: "Top 10 Road Trip Routes Across Bangladesh",
+    excerpt: "Discover breathtaking highway routes and essential safety tips for your next weekend getaway.",
+    date: "Sep 15, 2026",
+    category: "Travel Guide",
+    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 2,
+    title: "How to Choose the Right Vehicle for Group Trips",
+    excerpt: "Comparing Sedans, SUVs, and Microbuses based on luggage capacity and passenger comfort.",
+    date: "Sep 10, 2026",
+    category: "Car Rental Tips",
+    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
+  },
+  {
+    id: 3,
+    title: "Understanding Corporate Fleet Management Benefits",
+    excerpt: "How automated ride tracking and single-invoice billing optimize corporate transit budgets.",
+    date: "Sep 02, 2026",
+    category: "Business",
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=600&q=80",
+  },
+];
+

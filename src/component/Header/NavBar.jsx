@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, ChevronDown, Globe, Phone } from "lucide-react";
 import gsap from "gsap";
+import { prefersReducedMotion } from "../../utils/motion";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -12,12 +13,19 @@ export default function Navbar() {
     setIsMobileMenuOpen(true);
   };
 
-  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    // Reduced motion: skip the GSAP close tween and unmount immediately
+    if (prefersReducedMotion()) setIsMobileMenuRendered(false);
+  };
 
   // GSAP animation for Mobile Menu opening/closing
   useEffect(() => {
     const el = mobileMenuRef.current;
     if (!el) return;
+
+    // Reduced motion: menu is already visible/invisible via state — no tween
+    if (prefersReducedMotion()) return;
 
     gsap.killTweensOf(el);
 
@@ -75,7 +83,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a href="#top" className="flex items-center gap-2 group">
             <span className="text-2xl font-black tracking-tight text-emerald-600 group-hover:opacity-90 transition-opacity">
               GARI<span className="text-gray-900">BOOK</span>
             </span>

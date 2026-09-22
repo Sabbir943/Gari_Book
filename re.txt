@@ -1,0 +1,505 @@
+ENDOW TECH
+Frontend Intern Technical Assessment
+End-to-End Implementation Guide
+Recreate the Garibook homepage as a responsive React.js application
+Assessment	Requirement
+Role	Frontend Intern
+Technology	React.js + JavaScript
+Reference	https://garibook.com/ — homepage only
+Animation	GSAP — at least 2 meaningful animations
+Deadline	23 September 2026, 11:59 PM
+Submission	GitHub repository + max 2-minute video; live demo recommended
+
+Primary goal: Build a clean, reusable, responsive React implementation that looks and behaves like the reference homepage—not a single large component or a screenshot copy.
+
+Beginner-friendly • practical • submission-focused
+ 
+1. Understand the task before writing code
+The assessment asks for only the Garibook homepage. The evaluator is explicitly looking at visual accuracy, responsive behavior, React component structure, interactions, GSAP usage, code quality, and your ability to explain what you built.
+Do not overbuild: You do not need to reproduce the entire Garibook product, backend, authentication, booking engine, or other pages. Focus your time on the homepage UI and the important interactions visible there.
+
+Non-negotiable requirements
+☐ Use React.js and JavaScript.
+☐ Make the homepage responsive on desktop, tablet, and mobile.
+☐ Use multiple reusable components; do not put the full homepage in one component.
+☐ Implement important visible interactions where practical.
+☐ Use GSAP for at least 2 meaningful animations.
+☐ Add hover, focus, and interaction states.
+☐ Keep the code clean, readable, and organized.
+☐ GitHub repository must be accessible and contain a README with setup/run instructions.
+☐ Submit a maximum 2-minute screen recording.
+☐ Test desktop and mobile before submission.
+☐ Submit through the provided Google Form.
+What “production-quality” should mean here
+Area	Good submission behavior
+Visual	Spacing, typography, sizing, colors, borders, radius, alignment and section rhythm are close to the reference.
+Responsive	Layout adapts cleanly instead of only shrinking; no horizontal scroll or overlapping content.
+React	Sections are broken into logical reusable components; repeated cards are data-driven where sensible.
+Interactions	Menus, tabs/toggles, buttons, form controls, hover/focus states and relevant UI changes feel intentional.
+Motion	GSAP animations support the page instead of distracting from it.
+Code	Clear file names, predictable folders, no dead code, no secrets, no node_modules committed.
+
+2. Fast execution plan
+Use this order. It minimizes rework and protects the final hours for testing and submission.
+Phase	Work	Suggested time
+1	Audit the reference site and collect assets/styles	45–60 min
+2	Create project, structure folders, global CSS	20–30 min
+3	Build header + hero + booking panel	1.5–2 hr
+4	Build remaining homepage sections	2.5–4 hr
+5	Responsive pass	1–1.5 hr
+6	GSAP + interactions + polish	1–1.5 hr
+7	QA, GitHub, deploy, README	45–75 min
+8	Record 2-minute video + final submit	20–30 min
+
+Priority rule: A complete, accurate, responsive homepage beats an over-engineered partial implementation.
+
+3. Audit the reference website before coding
+Open https://garibook.com/ in Chrome. Inspect the desktop page first, then resize to tablet and mobile. Do not start by guessing styles.
+Create a simple design audit
+•	Header: logo, navigation links, language/control area, mobile navigation behavior.
+•	Hero: main message, image/background composition, app/download CTA and booking/search panel.
+•	Booking panel: car type, pickup/drop-off inputs, date/time and trip type controls.
+•	Statistics section.
+•	Services section with multiple service cards/items.
+•	Business / Garibook Club / VMS promotional sections.
+•	“Freedom in Every Journey” feature steps.
+•	Journey/use-case cards such as airport rentals, family trips and long tours.
+•	App/download promotional section.
+•	Smart Driver section.
+•	Featured/news/testimonial/blog areas.
+•	Large footer with navigation, contact information and app/company references.
+The current live homepage also exposes sections titled “From Everyday Rides to Meaningful Journeys,” “Our Services,” “Modern Car Rentals for Business,” “Turn Your Car into Earnings with Garibook Club,” “Vehicle Management System - VMS,” “Freedom in Every Journey,” “More Than Miles — We Bring People Together,” “Be a Smart Driver,” “Our Passengers Speak For Us,” “Beyond Destinations,” and the mobile-app/footer area. Use the live site as the final visual authority because content and assets can change.
+Use DevTools efficiently
+1.	Right-click an element → Inspect.
+2.	Check computed font family, font size, line-height, font weight, color, background, border radius and spacing.
+3.	Use the device toolbar to check at common widths such as 1440, 1024, 768, 430 and 375 px.
+4.	Use the Network/Elements panels only to understand public frontend assets. Do not copy proprietary source code wholesale.
+5.	Take your own screenshots of sections so you can compare while coding.
+Accuracy shortcut: Measure the big things first: max content width, section vertical spacing, heading sizes, card radius, column gaps, hero proportions and mobile stacking. Small decorative details come later.
+
+4. Create the React project
+Recommended setup: Vite + React + plain JavaScript. It is fast and matches the assessment requirement.
+npm create vite@latest garibook-homepage -- --template react
+cd garibook-homepage
+npm install
+npm install gsap
+npm run dev
+
+Open the local URL shown by Vite. Confirm the starter page runs before continuing.
+Suggested folder structure
+garibook-homepage/
+├─ public/
+│  └─ assets/
+├─ src/
+│  ├─ assets/
+│  ├─ components/
+│  │  ├─ common/
+│  │  │  ├─ Container.jsx
+│  │  │  ├─ SectionHeading.jsx
+│  │  │  └─ Button.jsx
+│  │  ├─ Header/
+│  │  ├─ Hero/
+│  │  ├─ BookingForm/
+│  │  ├─ Stats/
+│  │  ├─ Services/
+│  │  ├─ PromoSection/
+│  │  ├─ JourneySteps/
+│  │  ├─ Testimonials/
+│  │  ├─ Blogs/
+│  │  └─ Footer/
+│  ├─ data/
+│  │  └─ homeData.js
+│  ├─ styles/
+│  │  ├─ globals.css
+│  │  └─ variables.css
+│  ├─ App.jsx
+│  └─ main.jsx
+├─ .gitignore
+├─ package.json
+└─ README.md
+
+Clean the starter files
+•	Remove the Vite demo counter and unused logos.
+•	Keep App.jsx focused on composing homepage sections.
+•	Put global resets, typography and shared variables in dedicated CSS files.
+•	Store repeated service/feature/blog data in arrays and render with .map() when appropriate.
+5. Build a small design system first
+A few CSS variables prevent inconsistent spacing and colors across sections.
+:root {
+  --container: 1200px;
+  --page-pad: 24px;
+  --text: #1b1f24;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --section-space: 96px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; color: var(--text); background: #fff; }
+img { max-width: 100%; display: block; }
+button, input, select { font: inherit; }
+
+.container {
+  width: min(var(--container), calc(100% - (var(--page-pad) * 2)));
+  margin-inline: auto;
+}
+
+Important: Replace sample values with measurements from the live reference. The variables above are a structure, not a claim that they are Garibook’s exact values.
+
+6. Component map: build section by section
+Component	Responsibility
+Header	Logo, desktop nav, language/control, mobile menu trigger.
+Hero	Hero copy, visual, app CTA and overall hero composition.
+BookingForm	Car type, locations, date/time, trip-type controls and Continue button.
+Stats	Trip/customer/driver/district metrics.
+Services	Reusable service items/cards from data.
+PromoSection	Reusable image + copy block for Business, Garibook Club, VMS, etc.
+JourneySteps	Choose car / driver / fare steps.
+UseCases	Airport rentals / family trips / long tours.
+AppPromo	Mobile app screenshots/call-to-action.
+DriverPromo	Smart Driver / 0% commission messaging.
+Testimonials	Passenger testimonial presentation.
+Blogs	Blog/guide cards and Show All action.
+Footer	Links, contact details, app/company references and bottom legal row.
+
+App.jsx should read like a page outline, for example:
+function App() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <Stats />
+        <Services />
+        <BusinessPromo />
+        <ClubPromo />
+        <VmsPromo />
+        <JourneySteps />
+        <UseCases />
+        <AppPromo />
+        <DriverPromo />
+        <Testimonials />
+        <Blogs />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+7. Build the hero and booking panel first
+This is usually the highest-impact area because it is visible immediately. Match its height, content alignment, imagery, and booking panel carefully.
+Booking form implementation
+•	Use real form controls where practical: select, input, button, radio/toggle controls.
+•	Use labels even if the visual design hides them; accessibility matters.
+•	Mirror visible trip-type options such as One Way / Round Way / Hourly if they are present on the reference.
+•	Add focus-visible styles so keyboard users can see the active control.
+•	The Continue button does not need a real booking backend unless the reference interaction can be represented safely with frontend state.
+const [tripType, setTripType] = useState("one-way");
+
+<button
+  type="button"
+  className={tripType === "one-way" ? "trip active" : "trip"}
+  onClick={() => setTripType("one-way")}
+>
+  One Way
+</button>
+
+Frontend-only behavior is acceptable: For this assessment, demonstrate state changes and interactions without inventing a backend. If Continue cannot complete a real booking, validate the visible fields or show a small UI response instead of pretending a server action exists.
+
+8. Build repeated cards from data
+Avoid copy-pasting the same JSX four times. Put repeated content into an array.
+export const services = [
+  {
+    title: "Intercity Car Rental",
+    description: "Travel between cities with comfort and confidence.",
+    icon: "/assets/service-intercity.svg",
+  },
+  // Add the remaining items from the reference.
+];
+
+<div className="services-grid">
+  {services.map((service) => (
+    <ServiceCard key={service.title} {...service} />
+  ))}
+</div>
+
+This makes the UI easier to maintain and demonstrates the reusable React thinking the assessment asks for.
+9. Make responsiveness intentional
+Do not wait until the end to discover that the page only works at one width. Complete each major section on desktop, then immediately test tablet and mobile.
+Width	What to check
+≥ 1200 px	Full desktop composition, maximum content width, multi-column layouts.
+~1024 px	Navigation space, hero proportions, card grids, promotional sections.
+~768 px	Tablet stacking, 2-column → 1/2-column transitions, readable spacing.
+430/390/375 px	Mobile menu, single-column content, form controls, no overflow.
+
+Recommended responsive techniques
+•	Use CSS Grid or Flexbox, not absolute positioning for the whole page.
+•	Use clamp() for headings when useful.
+•	Stack image/text promotional sections on narrow screens.
+•	Reduce section padding on mobile.
+•	Make form fields full width on mobile.
+•	Give tap targets enough size; avoid tiny icon-only controls.
+•	Check that images preserve aspect ratio and do not cause horizontal scrolling.
+@media (max-width: 768px) {
+  :root {
+    --page-pad: 16px;
+    --section-space: 64px;
+  }
+
+  .desktop-nav { display: none; }
+  .mobile-menu-button { display: inline-flex; }
+
+  .hero-grid,
+  .promo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+10. Add at least 2 meaningful GSAP animations
+Use motion to improve hierarchy. Do not animate everything.
+Animation 1 — hero entrance
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+
+function Hero() {
+  const root = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".hero-reveal", {
+        y: 28,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out",
+      });
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
+
+  return <section ref={root}>{/* ... */}</section>;
+}
+
+Animation 2 — scroll reveal for cards/sections
+Install/use ScrollTrigger if you choose a scroll-triggered effect.
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from(".service-card", {
+  scrollTrigger: {
+    trigger: ".services-grid",
+    start: "top 80%",
+  },
+  y: 30,
+  opacity: 0,
+  duration: 0.6,
+  stagger: 0.1,
+  ease: "power2.out",
+});
+
+Meaningful means: The animation helps reveal the hero, guides attention, or introduces a group of cards/sections. A random spinning logo or decorative movement that does not support the interface is weaker evidence.
+
+Respect reduced motion
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+11. Add visible interaction states
+☐ Navigation links: hover + focus-visible.
+☐ Buttons: hover, active/pressed, focus-visible.
+☐ Cards: subtle hover only if the reference suggests interactivity.
+☐ Inputs/selects: focus border/ring and useful placeholder text.
+☐ Mobile menu: open/close state and Escape key if implemented.
+☐ Clickable images/icons: accessible name if they act as controls.
+☐ Use semantic section/headings; keep heading order logical.
+☐ Provide alt text for informative images; decorative images can use empty alt text.
+12. Visual accuracy pass
+Once all sections exist, compare your local page beside the reference and fix differences in this order:
+6.	Overall container width and page rhythm.
+7.	Hero height, image scale and booking panel position.
+8.	Typography: family, size, weight, line height.
+9.	Section padding and spacing between headings/cards.
+10.	Grid column widths and gaps.
+11.	Colors, backgrounds, border radius and shadows.
+12.	Icon/image sizes and alignment.
+13.	Small details: borders, dividers, arrows, hover transitions.
+Do not chase pixel perfection too early: Finish all sections and responsive behavior before spending 30 minutes on one icon.
+
+13. Test the project before submission
+Functional QA
+☐ Page loads with no console errors.
+☐ Header navigation and mobile menu work as intended.
+☐ Booking form controls can be interacted with.
+☐ Buttons/links do not accidentally submit or reload the page.
+☐ Both GSAP animations run correctly and do not replay strangely.
+☐ No missing images or broken asset paths.
+Responsive QA
+☐ 1440 px desktop
+☐ 1024 px laptop/tablet landscape
+☐ 768 px tablet
+☐ 430 px mobile
+☐ 390 px mobile
+☐ 375 px mobile
+☐ No horizontal scrollbar at any width
+Code QA
+☐ No node_modules committed.
+☐ No .env, API keys, passwords, secrets or private credentials.
+☐ No unused large assets.
+☐ No giant App.jsx with the whole page.
+☐ No repeated JSX that should obviously be a reusable component.
+☐ Consistent naming and formatting.
+14. Create a clean GitHub repository
+git init
+git add .
+git commit -m "Initial Garibook homepage implementation"
+git branch -M main
+git remote add origin YOUR_REPOSITORY_URL
+git push -u origin main
+
+Use a sensible repository name such as:
+garibook-homepage-react
+
+Make sure the evaluator can access the repository. If it is private, grant the required access before submission.
+Recommended commit history
+•	setup: create React project and global styles
+•	feat: build header and hero booking section
+•	feat: add services and promotional sections
+•	feat: add remaining homepage sections
+•	feat: add responsive layouts
+•	feat: add GSAP animations and interactions
+•	fix: final visual and responsive polish
+15. README template
+The assessment specifically asks for basic setup/run instructions. A short professional README is enough.
+# Garibook Homepage Recreation
+
+Frontend Intern Technical Assessment for Endow Tech.
+
+## Tech Stack
+- React.js
+- JavaScript
+- CSS
+- GSAP
+
+## Features
+- Responsive Garibook homepage recreation
+- Component-based React structure
+- Interactive booking UI
+- GSAP hero entrance animation
+- GSAP scroll-reveal animation
+- Desktop, tablet and mobile layouts
+
+## Run Locally
+```bash
+npm install
+npm run dev
+```
+
+## Production Build
+```bash
+npm run build
+```
+
+## Live Demo
+Add your deployed URL here.
+
+## Notes
+This project recreates the public Garibook homepage for the assessment.
+Only the homepage is implemented.
+
+16. Deploy the live demo
+The live demo is optional but recommended. Vercel is a straightforward choice for a Vite React app.
+14.	Push the latest code to GitHub.
+15.	Open Vercel and import the GitHub repository.
+16.	Framework should normally be detected as Vite.
+17.	Build command: npm run build.
+18.	Output directory: dist.
+19.	Deploy.
+20.	Open the public URL on desktop and mobile; check assets and animations again.
+Before recording: Use the deployed URL if it is stable. It shows the evaluator that the project actually builds in a production environment.
+
+17. Record the required maximum 2-minute video
+The assessment tells you exactly what to show. Keep the recording structured so you do not exceed 2 minutes.
+Time	What to show / say
+0:00–0:30	Show the finished homepage. Scroll through the main sections and briefly show mobile responsiveness if possible.
+0:30–0:55	Open the code editor and show src/components, data and styles structure.
+0:55–1:25	Show the two GSAP implementations. Explain what each animation does and why you used it.
+1:25–1:50	Mention one technical decision/challenge—for example responsive booking layout, reusable promo components or matching the reference spacing.
+1:50–2:00	Finish with the live demo/GitHub ready for review.
+
+Example simple video script
+“This is my recreation of the Garibook homepage using React.js and JavaScript. I built the page as reusable components for the header, hero and booking form, services, promotional sections, journey steps, testimonials, blogs and footer. The layout is responsive across desktop, tablet and mobile. I used GSAP for the hero entrance and for scroll-based section/card reveals. One challenge was keeping the booking panel and promotional layouts close to the reference while still stacking cleanly on mobile, so I used grid layouts with responsive breakpoints. The source code and setup instructions are available in the GitHub repository.”
+Do not read code line-by-line: The video is an explanation, not a tutorial. Show that you understand the architecture and the two GSAP choices.
+
+18. Final submission checklist
+☐ Homepage is complete—not only hero/above-the-fold.
+☐ Desktop layout checked.
+☐ Tablet layout checked.
+☐ Mobile layout checked.
+☐ No horizontal overflow.
+☐ At least 2 meaningful GSAP animations are working.
+☐ Important interactions and hover/focus states are present.
+☐ React components are logically separated.
+☐ GitHub repository is accessible.
+☐ README contains setup/run instructions.
+☐ node_modules is not committed.
+☐ .env/API keys/passwords/private credentials are not committed.
+☐ Optional live demo URL works.
+☐ Video is 2 minutes maximum.
+☐ Video shows homepage, component/folder structure, GSAP usage and one technical decision/challenge.
+☐ Final links are submitted through the provided Google Form before the deadline.
+19. Common mistakes that can lower the assessment quality
+Mistake	Better approach
+One huge component	Split the page by responsibility and reuse repeated UI.
+Desktop-only clone	Test each section at tablet/mobile widths as you build.
+Two meaningless GSAP effects	Use hero entrance + scroll/card/section reveal.
+Screenshot as the page	Recreate the interface with real HTML/CSS/React.
+Overusing absolute positioning	Use Grid/Flexbox and reserve absolute positioning for decorative/intentional overlays.
+Ignoring form states	Make controls focusable, interactive and visually clear.
+Copying code you cannot explain	Use AI for help, but understand every important component and animation.
+Committing secrets or node_modules	Use .gitignore and review git status before pushing.
+Recording a long video	Follow the 2-minute timeline and rehearse once.
+
+20. Safe and useful way to use AI tools
+The assessment allows AI tools, but you must understand the code and explain it. Use AI as a pair programmer rather than asking it to generate an opaque project you cannot debug.
+Good AI requests
+•	“Here is my Header component and CSS. At 768px the nav overlaps the logo. Fix the responsive CSS without changing the desktop design.”
+•	“Convert these four repeated service blocks into one reusable React ServiceCard component rendered from an array.”
+•	“Add a GSAP scroll reveal to these cards using gsap.context and cleanup correctly.”
+•	“Compare this CSS structure with the screenshot measurements I provide and suggest only spacing/typography fixes.”
+Avoid this workflow
+•	Generating the entire project in one prompt, pasting it blindly, and being unable to explain the architecture or GSAP code.
+21. Quick troubleshooting
+Problem	Fix
+Blank page	Check browser console; verify imports/exports and JSX syntax.
+Image missing after deploy	Use correct public or imported asset paths; avoid local file-system paths.
+GSAP runs twice in development	Use gsap.context cleanup; remember React Strict Mode may expose side effects during development.
+ScrollTrigger not working	Import ScrollTrigger, register it once, and ensure the target/trigger exists.
+Horizontal scroll on mobile	Inspect wide fixed-width elements, transforms, images and padding; use overflow debugging only temporarily.
+Mobile menu behind content	Check position, stacking context and z-index.
+Vercel build fails	Run npm run build locally first; fix build errors before redeploying.
+Layout differs from reference	Re-check container width, typography, spacing, image aspect ratio and section order before tiny details.
+
+22. Recommended final project shape
+A strong submission should be easy for an evaluator to understand within a few minutes:
+21.	Open live demo → complete responsive Garibook homepage appears.
+22.	Inspect interactions → form controls, buttons and responsive navigation feel usable.
+23.	Scroll → at least two intentional GSAP animations are visible.
+24.	Open GitHub → organized components and readable code.
+25.	Open README → setup is immediately clear.
+26.	Watch video → you explain component structure, GSAP and one technical decision/challenge confidently.
+Final target: Do not aim to prove that you can add the most libraries. Prove that you can inspect a real interface, decompose it into React components, reproduce it responsively, add purposeful motion, test it, and ship it cleanly.
+
+Source note
+This guide is based on the Endow Tech Frontend Intern Technical Assessment supplied by the candidate and a review of the public Garibook homepage (https://garibook.com/) on 22 September 2026. The live website should be treated as the visual reference at implementation time because public content and design details may change.

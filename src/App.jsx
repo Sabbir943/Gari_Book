@@ -1,6 +1,7 @@
 
 import './App.css'
 import Navbar from './component/Header/NavBar'
+import Hero from './component/Hero/Hero'
 
 function App() {
  
@@ -13,8 +14,9 @@ function App() {
       <Navbar />
 
       {/* Main Content Area */}
-      <main>
-        {/* Other sections like Hero, Services, etc. will go here */}
+    <main className="flex-grow">
+        <Hero />
+        {/* Upcoming sections: <Stats />, <Services />, etc. */}
       </main>
 
       {/* Footer will go here */}
